@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "df452622-c934-40be-831e-6366cca0e085",
+		"name": "gendev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36236984"
+	},
+	"item": [
+		{
+			"name": "upload_doc",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/avane/Downloads/testt.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/upload/document/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"upload",
+						"document",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "display table by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Task ID</th>\r",
+							"        <th>Task Description</th>\r",
+							"        <th>Estimate</th>\r",
+							"        <th>Estimated Time</th>\r",
+							"        <th>Status</th>\r",
+							"        <th>Assigned To</th>\r",
+							"        <th>Task Type</th>\r",
+							"        <th>Created Date</th>\r",
+							"        <th>Modified Date</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.proj_id_4}}\r",
+							"        <tr>\r",
+							"            <td>{{task_id}}</td>\r",
+							"            <td>{{task_description}}</td>\r",
+							"            <td>{{estimate}}</td>\r",
+							"            <td>{{estimated_time}}</td>\r",
+							"            <td>{{status}}</td>\r",
+							"            <td>{{assigned_to}}</td>\r",
+							"            <td>{{task_type}}</td>\r",
+							"            <td>{{created_date}}</td>\r",
+							"            <td>{{modified_date}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/display/table/code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"display",
+						"table",
+						"code"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "display table by name and id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/display/table-by-id/?table_name=code&index=33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"display",
+						"table-by-id",
+						""
+					],
+					"query": [
+						{
+							"key": "table_name",
+							"value": "code"
+						},
+						{
+							"key": "index",
+							"value": "33"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Expected Completion Date</th>\r",
+							"        <th>Estimated Time (hrs)</th>\r",
+							"        <th>Task Description</th>\r",
+							"        <th>Task Type</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.plan}}\r",
+							"        <tr>\r",
+							"            <td>{{expected_completion_date}}</td>\r",
+							"            <td>{{estimated_time_completion_hrs}}</td>\r",
+							"            <td>{{task_description}}</td>\r",
+							"            <td>{{task_type}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/pm/get-plan/?proj_id=7&assigned_to=\"me\"",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"pm",
+						"get-plan",
+						""
+					],
+					"query": [
+						{
+							"key": "proj_id",
+							"value": "7"
+						},
+						{
+							"key": "assigned_to",
+							"value": "\"me\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate test_cases",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/qa/get-test-cases/?proj_id=7&assigned_to=\"me\"",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"qa",
+						"get-test-cases",
+						""
+					],
+					"query": [
+						{
+							"key": "proj_id",
+							"value": "7"
+						},
+						{
+							"key": "assigned_to",
+							"value": "\"me\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate code from task_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/dev/gen-code-by-task-id?task_id=55&llmtype=ollama&model=mistral",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dev",
+						"gen-code-by-task-id"
+					],
+					"query": [
+						{
+							"key": "task_id",
+							"value": "55"
+						},
+						{
+							"key": "llmtype",
+							"value": "ollama"
+						},
+						{
+							"key": "model",
+							"value": "mistral"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate code from project_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/dev/gen-code-by-proj-id?proj_id=7&llmtype=ollama&model=mistral",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"dev",
+						"gen-code-by-proj-id"
+					],
+					"query": [
+						{
+							"key": "proj_id",
+							"value": "7"
+						},
+						{
+							"key": "llmtype",
+							"value": "ollama"
+						},
+						{
+							"key": "model",
+							"value": "mistral"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "requirements_query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\":\"you can call FINISHED_CALL iam finsihed with all of the requirements\",\r\n    \"thread_id\":\"4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/requirements/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"requirements",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload text",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\":\"Project Overview:\\nDevelop a Python software that generates random numbers for a dice game.\\n\\nGoals:\\nThe primary goal is to create a simple Python program that generates random numbers between 1 and a certain number (e.g., 6) when a user enters a dice roll command.\\n\\nFeatures:\\n\\n* Generates a random number between 1 and a certain number (e.g., 6) when a user enters a dice roll command.\\n* Does not include additional features or functionalities, such as scoring rules or graphical interfaces.\\n\\nUse Cases:\\nA user enters a dice roll command to generate a random number for a game.\\n\\nConstraints:\\n\\n* Budget: N/A\\n* Deadline: N/A\\n\\nClarifications:\\nThe program should only generate random numbers for a dice game and does not require any additional features.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/upload/text",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"upload",
+						"text"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
